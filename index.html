@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat Node.js</title>
+</head>
+<body>
+    <h2>Chat en tiempo real</h2>
+
+    <input id="mensaje" placeholder="Escribe un mensaje">
+    <button onclick="enviar()">Enviar</button>
+
+    <ul id="mensajes"></ul>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        function enviar() {
+            const input = document.getElementById("mensaje");
+            socket.emit("mensaje", input.value);
+            input.value = "";
+        }
+
+        socket.on("mensaje", (msg) => {
+            const li = document.createElement("li");
+            li.textContent = msg;
+            document.getElementById("mensajes").appendChild(li);
+        });
+    </script>
+</body>
+</html>
